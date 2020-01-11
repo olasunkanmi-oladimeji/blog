@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block 'body' %}
+
+{% for blogpost in list %}
+    <div class="jumbotron">
+        <center>
+            <h1> {{blogpost.title}}</h1>
+            <h4 class="container-sm lead borderborder-info"> {{blogpost.text|linebreaks}}</h4>
+            <img class="rounded" height="300px" width="500px" src="{{blogpost.images.url}}" alt="">
+            <p>{{blogpost.publish_date}}</ p>
+            <hr> 
+         </center>
+         <div class='container'>
+            <center>
+              {% for commentpost in blogpost.comment.all %}
+              <p> comment: {{ commentpost.comment }}</p>  
+              {% endfor %}
+              <a class=" btn btn-danger btn-lg fas fa-comment " href="{% url 'add_comment_to_post' blogpost.id %}"> Comments: {{ blogpostpost.comment.count }}</a>
+           </center>
+        </div>
+    </div>
+{% endfor %}
+    
+    
+{% endblock %}

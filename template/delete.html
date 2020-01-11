@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block 'body' %}
+<div class="jumbotron">
+    <h1>Delete BLOG POST</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+      
+        <button type="submit" class="btn btn-danger btn-lg far fa-trash-alt"> Delete</button>
+        <a class=nav-link href="{% url 'draft' %}">cancel</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block 'body' %}
+<div class="container">
+<center>
+    <h1> {{blogpost.title}}</h1>
+ <h4 class="container">{{blogpost.text}}</h4>
+<img src="{{MEDIA.ROOT}}{{blogpost.images}}" alt="">
+<p> {{blogpost.created_date}}</p>
+ <p>{{blogpost.publish_date}}</p>
+ <a  href="{% url 'update' blogpost.id %}"><i class="btn btn-primary btn-lg fas fa-edit"></i></a>
+ <a href="{% url 'delete' blogpost.id %}"><i class="btn btn-danger btn-lg far fa-trash-alt"></i></a>
+</center>
+
+<hr>
+{% for commentpost in blogpost.comment.all %}
+    {% if user.is_authenticated or comment.approved_comment %}
+    <div class="container">
+        <div class="date">
+            {{ commentpost.publish_date }}
+            {% if not commentpost.approved_comment %}
+            <strong>{{ commentpost.name }}</strong>
+            <p>{{ commentpost.comment|linebreaks }}</p>
+                <a class="btn btn-default" href="{% url 'comment_remove' commentpost.id %}"><span class="far fa-trash-alt">remove</span></a>
+                <a class="btn btn-default" href="{% url 'comment_approve' commentpost.id %}"><span class="fas fa-thumbs-up">approve</span></a>
+            {% endif %}
+        </div>
+       
+    </div>
+    {% endif %}
+{% empty %}
+    <p>No comments here yet :</p>
+{% endfor %}
+
+<a class=" btn btn-danger btn-lg fas fa-comment " href="{% url 'add_comment_to_post' blogpost.id %}"> Comments: {{ blogpostpost.comment.count }}</a>
+{% for commentpost in blogpost.comment.all %}
+<p>{{ commentpost.comment|linebreaks }}</p>  
+{% endfor %}
+</div>
+{% endblock %}

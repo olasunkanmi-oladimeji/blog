@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block 'body' %}
+<div class="jumbotron">
+    <h1>UPDATE BLOG POST</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="btn btn-primary btn-lg fas fa-edit"></button>
+        <a class=nav-link href="{% url 'draft' %}">cancel</a>
+    </form>
+</div>
+{% endblock %}

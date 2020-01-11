@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My blog</title>
+    
+    <script src="https://kit.fontawesome.com/d9483179a9.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+   </head>
+<body>
+    <nav class='nav justify-content-center nav-tabs navbar navbar-expand-lg navbar-light bg-light'>
+        <a class="nav-brand mb-0 h4 nav-link"  href="{% url 'homepage' %}">SK DESIGN</a>
+        <a class=nav-link href="{% url 'about' %}">ABOUT</a>
+        <div class="nav justify-content-end">
+            {% if user.is_authenticated %}
+            <a class="nav-link " href="{% url 'newpost' %}">New Post</a>
+            <a class="nav-link" href="{% url 'draft' %}">Draft</a>
+            <a class="nav-link ">welcome : {{user.username}}</a>
+            <a class="fas fa-user nav-link " href="{% url 'logout' %}"> Logout</a>
+            {% else %}
+            <a class="fas fa-user nav-link " href="{% url 'login' %}"> Login</a>
+           
+            {% endif %}
+          
+        </div>
+      
+    </nav>
+    <div>
+        {% block 'body' %}
+        
+        {% endblock %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block 'body' %}
+<div class="container jumbotron">
+ {% for blogpost in list %}
+     <ul><li><a href="{% url 'postdetail' blogpost.id %}">{{blogpost.title}}</a><br>
+        <p> {{blogpost.created_date}}</p></li></ul>
+ {% endfor %}
+</div>
+{% endblock %}
