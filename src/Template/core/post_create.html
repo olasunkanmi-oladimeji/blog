@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block head_title %}{{posts.title}}{% endblock %}
+{% block content %}
+  
+<img src="/static/img/home-bg.jpg" alt="" height="500px" width="100%">
+
+  <!-- Post Content -->
+  <article>
+    <div class="container ">
+      <div class="row m-5">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          
+          <div class=" p-5">
+          <form method="Post" enctype="multipart/form-data" >
+            <center><h3>You Are Creating A New Post</h3></center>
+
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button style="width: 100%;" class="btn btn-outline-dark" type="submit">Create A Post</button>
+        </form>
+        </div>
+          
+          </div>
+            
+          
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <hr>
+
+{% endblock content %}
+  

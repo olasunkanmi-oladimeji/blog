@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load account %}
+{% block head_title %}{{posts.title}}{% endblock %}
+{% block content %}
+  
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('/static/img/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h2>Category : {{category.name}}</h2>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <hr>
+         
+        
+        {% if category %}
+          
+        
+          
+        {% for post in cat  %}
+        <div class="post-preview">
+            <a href="{{post.get_absolute_url}}">
+              <h2 class="post-title">
+                {{post.title}}
+              </h2>
+              <h3 class="post-subtitle">
+                {{post.content|safe|truncatewords:20|urlize}}
+              </h3>
+            </a>
+            <p class="post-meta">Posted by
+              <a href="#">{{post.author}}</a>
+              {{post.publish_date}} <a href="{% url 'core:post' pk=post.pk %}">Comments: {{ post.comments.count }}</a>
+              
+          </div>
+          <hr>
+            
+        {% endfor %} 
+        {% else %}
+        <h2>category doesn't exists</h2>
+      
+        {% endif %}   
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <hr>
+
+{% endblock content %}
+  

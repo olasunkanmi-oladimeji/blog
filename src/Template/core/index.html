@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+
+{% block head_title %}{% trans "Refine Minds" %}{% endblock %}
+{% block content %}
+ <!-- Page Header -->
+<img src="/static/img/base.jpg" alt="" height="500px" width="100%">
+
+<!-- Main Content -->
+<div class="container">
+  <div class="row m-5">
+    <div class="col-lg-10 col-md-12 mx-auto">
+      
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for post in posts %}
+        <div class="col m-2">
+          <div class="card ">
+            {% if post.image %}
+            <a href="{{post.get_absolute_url}}"><img src="{{post.image.url}}" class="card-img-top" height="200px" loading='lazy' alt="..."></a>
+            {% endif %}
+            <div class="card-body">
+              <a href="{{post.get_absolute_url}}">
+              <h5 class="card-title">{{post.title}}</h5>
+              <p class="card-text">{{post.content|safe|truncatewords:20|urlize}}</p>
+            </a>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">category : {{post.category}},</small><br>
+              <small class="post-meta"> Posted by
+                <a href="{{post.get_absolute_url}}">{{post.author}}</a>
+                {{post.publish_date}}
+                 <a href="{% url 'core:post' pk=post.pk %}">Comments: {{ post.comments.count }}</a>
+                 </small>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        
+      </div>
+        
+      
+      <!-- Pager -->
+      
+
+      {% if posts.has_other_pages %}
+  
+    {% if posts.has_previous %}
+      
+      <div class="clearfix">
+        <a class="btn btn-primary float-" href="?page={{ posts.previous_page_number }}"> &lharu; New Posts </a>
+      </div>
+   
+    {% endif %}
+  
+    {% if posts.has_next %}
+      
+      <div class="clearfix">
+        <a class="btn btn-primary float-right" href="?page={{ posts.next_page_number }}">Older Posts &rarr;</a>
+      </div>
+
+    {% endif %}
+  
+{% endif %}
+    </div>
+  </div>
+  
+ 
+</div>
+
+<hr>
+  
+{% endblock content %}
+  

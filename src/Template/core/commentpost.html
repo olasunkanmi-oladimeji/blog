@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load bootstrap4 %}
+{% block head_title %}{{posts.title}}{% endblock %}
+{% block content %}
+  
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row m-5">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          
+          
+          <div class="card p-5">
+            
+            <form action="" method="post" class="card-body">
+              <center><h3>Tell Your Thought On The Article</h3></center>
+              {% bootstrap_form form%}
+              {% csrf_token %}
+              <center><div class="">
+                <button style="width: 100%;" class="btn btn-outline-dark" type="submit">Comment on Post</button>
+               
+              </div></center>
+              
+            </form>
+          </div>
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <hr>
+
+{% endblock content %}
+  

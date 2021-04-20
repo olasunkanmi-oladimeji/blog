@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load account %}
+{% block head_title %}{{posts.title}}{% endblock %}
+{% block content %}
+  
+  <!-- Page Header -->
+
+  
+
+
+
+  <!-- Post Content -->
+  <article>
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          
+          {% if post.video %}
+          <video controls  height="500px" width="100%" > 
+            <source src="{{post.video.url}}"  type="video/ogg">
+            <source src="{{post.video.mp4}}"  type="video/ogg"> </video>
+
+          {% else %}
+
+          <img src="{{post.image.url}}" alt="">
+          {% endif %}
+            
+          
+
+         <p>{{post.content|linebreaks|safe|urlizetrunc:15}}</p>
+         
+         {% if user.is_authenticated and user.is_superuser %}
+         
+         <a href="#">
+          <a class="btn btn-danger" href="{% url 'core:PostDelete' pk=post.pk  %}">Delete <i class="fas fa-trash-alt"></i></a>
+          <a class="btn btn-dark" href="{% url 'core:PostUpdate' pk=post.pk %}">Update <i class="fas fa-edit"></i></a>
+          
+          {% if not post.publish_date %}
+          <a class="btn btn-primary " href="{% url 'core:post_approve' pk=post.pk %}">Publish Post <i class="fas fa-check-circle"></i></a>
+          {% endif %}
+            
+         
+         
+         {% endif %}
+           
+         
+          <hr>
+
+          <div>
+            <a class="btn btn-outline-info" href="{% url 'core:add_comment_to_post' pk=post.pk %}">Add comment <span class=" m-2 fa fa-comment"></span></a>
+            <hr>
+
+            {% for comment in post.comments.all %}
+              
+              
+            {% if user.is_authenticated and user.is_superuser or comment.approved_comment %}
+            <div class="comment" style="margin: 20px 0px 20px 20px;">
+                <div class="date">
+                    {{ comment.date_added }}
+                    {% if not comment.approved_comment %}
+                        <a class="btn btn-danger m-2" href="{% url 'core:comment_remove' pk=comment.pk %}"><span class="fas fa-times"></span></a>
+                        <a class="btn btn-primary m-2" href="{% url 'core:comment_approve' pk=comment.pk %}"><span class="fas fa-check"></span></a>
+                    {% endif %}
+                </div>
+                <strong>{{ comment.name }}</strong>
+                <p>{{ comment.body|linebreaks }}</p>
+            </div>
+            <hr>
+          
+            {% endif %}
+              
+        {% empty %}
+            <p>No comments here yet :(</p>
+        {% endfor %}
+        
+              
+          </div>
+          
+      
+          
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <hr>
+
+{% endblock content %}
+  

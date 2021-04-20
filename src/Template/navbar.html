@@ -1,0 +1,59 @@
+<nav class="navbar navbar-expand-lg navbar-light " >
+    <div class="container">
+      <a class="navbar-brand " href="/" style="font-family: ranch;font-size: 30px;">Refine Minds</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link waves-effect" href="/">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="{% url 'core:about' %}" >About</a>
+          </li>
+          
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          
+          {% if user.is_authenticated  %}
+          {% for cat in cats  %}
+             
+          <li class="nav-item">
+            <a class="nav-link" href="{{cat.get_absolute_url}}">{{cat.name}}</a>
+          </li>
+          {% endfor %}
+          {% endif %}
+              
+          
+          {% if user.is_authenticated and user.is_superuser %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'core:draft' %}">Draft</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'core:postCreate' %}">New Post</a>
+          </li>
+            
+          {% endif %}
+            
+          
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'account_logout' %}">Log Out</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'account_login' %}">Log In</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link  rounded-pill " href="{% url 'account_signup' %}">Sign Up</a>
+          </li>
+          {% endif %}
+            
+        </ul>
+      </div>
+    </div>
+  </nav>

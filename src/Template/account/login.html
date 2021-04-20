@@ -1,0 +1,73 @@
+{% extends "account/base.html" %}
+{% load bootstrap4 %}
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+
+
+<div id="login-button">
+  <img src="https://dqcgrsy5v35b9.cloudfront.net/cruiseplanner/assets/img/icons/login-w-icon.png">
+  </img>
+</div>
+
+<div id="container">
+  <h1>Log In</h1>
+
+  {% get_providers as socialaccount_providers %}
+
+  {% if socialaccount_providers %}
+  <p class="text-center text-info">{% blocktrans with site.name as site_name %} 
+    <span class="text-white" style="color: white;"> Please sign in with one
+      of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
+      for a {{ site_name }} account and sign in below:{% endblocktrans %}</span></p>
+  
+  <div class="socialaccount_ballot text-info">
+  
+    <ul class="socialaccount_providers text-center text-white">
+      {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+    </ul>
+  
+    <div class="login-or">{% trans 'or' %}</div>
+  
+  </div>
+  
+  {% include "socialaccount/snippets/login_extra.html" %}
+  
+  {% else %}
+  <p class="text-center text-white">{% blocktrans %}If you have not created an account yet, then please
+  <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+  {% endif %}
+  <form method="POST">
+    {% csrf_token %}
+    <input type="Username" name="login" placeholder="Username" autocomplete="username" maxlength="150" required="" id="id_login">
+    <input type="password" name="password" placeholder="Password" autocomplete="current-password" required="" id="id_password">
+    {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+    <input type="submit" class="button" value="Log In">
+    <div id="remember-container">
+      <input type="checkbox" id="checkbox-2-1 id_remember" class="checkbox" checked="checked" name="remember" />
+      <span id="remember">Remember me</span>
+      <span id="forgotten">Forgotten password</span>
+    </div>
+</form>
+</div>
+
+<!-- Forgotten Password Container -->
+
+<div id="forgotten-container">
+  <h1>Forgotten</h1>
+ <span class="close-btn">
+   <img src="https://cdn4.iconfinder.com/data/icons/miu/22/circle_close_delete_-128.png"></img>
+ </span>
+
+ <form>
+   <input type="email" name="email" placeholder="E-mail">
+   <a href="#" class="orange-btn">Get new password</a>
+</form>
+</div>
+
+{% endblock %}

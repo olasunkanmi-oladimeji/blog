@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block head_title %}{% trans "Draft" %}{% endblock %}
+{% block content %}
+  
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('/static/img/about-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="page-heading">
+            <h1>Draft Post</h1>
+            <span class="subheading">This is what I do.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 col-md-10 mx-auto">
+
+<table class="table">
+    <thead>
+      <tr class="bg-light">
+        <th scope="col">#</th>
+        <th scope="col">Post Title</th>
+        <th scope="col">Author</th>
+        <th scope="col">Created Date</th>
+        <th scope="col">Published Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      {% for post in object_list %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td><a href="{% url 'core:post' pk=post.pk %}">{{post.title|safe|truncatewords:20}}</a></td>
+        <td>{{post.author}}</td>
+        <td><a href="{% url 'core:post' pk=post.pk %}">{{post.created_date}}</a></td>
+        <td><a href="{% url 'core:post' pk=post.pk %}">{{post.publish_date}}</a></td>
+      </tr>
+      {% endfor %}
+          
+      
+    </tbody>
+  </table>
+
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+{% endblock content %}
+  
+ 
